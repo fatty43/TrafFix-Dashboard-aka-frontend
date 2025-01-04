@@ -54,7 +54,7 @@
 import Web3 from "web3";
 import UserRegistry from "../contracts/UserRegistry.json"; // Adjust the path to your contract's JSON file
 
-const CONTRACT_ADDRESS ="0x3d7f624FDc8DaA2e7C85991eaEaa8E04Ac939B90";;
+const CONTRACT_ADDRESS ="0x52cdEB06578523B3DBEba82318Dd07663615b12E";;
 
 // Initialize Web3
 export const getWeb3 = async () => {
@@ -65,6 +65,7 @@ export const getWeb3 = async () => {
     await window.ethereum.request({ method: 'eth_requestAccounts' });
    
     return web3;
+
   } else {
     throw new Error("MetaMask is not installed!");
   }

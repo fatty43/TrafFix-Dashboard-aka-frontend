@@ -18,7 +18,7 @@ import MDButton from "components/MDButton";
 // Layout
 import CoverLayout from "layouts/authentication/components/CoverLayout";
 // Images
-import bgImage from "assets/images/bg-sign-up-cover.jpeg";
+import bgImage from "assets/images/signnnnup.jpg";
 // Toast styles
 import "react-toastify/dist/ReactToastify.css";
 
@@ -94,6 +94,7 @@ function GrievancePage() {
           bgColor="info"
           borderRadius="lg"
           coloredShadow="success"
+           alignItems="center"
           mx={2}
           mt={-3}
           p={3}

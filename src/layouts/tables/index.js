@@ -16,15 +16,15 @@ import DataTable from "examples/Tables/DataTable";
 import authorsTableData from "layouts/tables/data/authorsTableData";
 import projectsTableData from "layouts/tables/data/projectsTableData";
 
-function Tables() {
-  return (
-    <DashboardLayout>
-      <DashboardNavbar />
-      {/* Add placeholder content here if needed */}
-      <Footer />
-    </DashboardLayout>
-  );
-}
+// function Tables() {
+//   return (
+//     <DashboardLayout>
+//       <DashboardNavbar />
+//       {/* Add placeholder content here if needed */}
+//       <Footer />
+//     </DashboardLayout>
+//   );
+// }
              
        
-export default Tables;
+// export default Tables;

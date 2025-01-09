@@ -5,19 +5,40 @@ contract UserRegistry {
     struct User {
         string name;
         string email;
-        string privateKey; // Store the private key
         address walletAddress;
     }
 
-    mapping(address => User) public users;
+    mapping(address => User) public users; // Mapping to store user data
+    address[] public userAddresses; // Array to keep track of registered addresses
 
-    function registerUser(string memory _name, string memory _email, string memory _privateKey) public {
+// Event for user registration
+    event UserRegistered(address indexed walletAddress, string name, string email);
+
+
+
+    // Register a new user
+    function registerUser(string memory _name, string memory _email) public {
         require(bytes(users[msg.sender].email).length == 0, "User already registered");
-        users[msg.sender] = User(_name, _email, _privateKey, msg.sender);
+
+        // Store user details in the mapping
+        users[msg.sender] = User(_name, _email, msg.sender);
+
+        // Add the user's address to the array
+        userAddresses.push(msg.sender);
+
+// Emit the UserRegistered event
+        emit UserRegistered(msg.sender, _name, _email);
+
     }
 
-    function getUser(address _userAddress) public view returns (string memory, string memory, string memory, address) {
+    // Get user details by address
+    function getUser(address _userAddress) public view returns (string memory, string memory, address) {
         User memory user = users[_userAddress];
-        return (user.name, user.email, user.privateKey, user.walletAddress);
+        return (user.name, user.email, user.walletAddress);
+    }
+
+    // Get the list of all registered addresses
+    function getAllUsers() public view returns (address[] memory) {
+        return userAddresses;
     }
 }

@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 contract Grievance {
     struct Complaint {
-        uint id;
+        uint id; 
         address user;
         string description;
         string officerName;

@@ -18,7 +18,7 @@ import MDButton from "components/MDButton";
 import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 // Images
-import bgImage from "assets/images/signup.jpeg";
+import bgImage from "assets/images/traffic-light-1360645_1280.jpg";
 
 function Cover() {
   const [name, setName] = useState("");
@@ -54,6 +54,8 @@ function Cover() {
 
     if (!name || !email ) {
       setError("All fields are required.");
+      
+      
       return;
     }
 
@@ -79,110 +81,30 @@ setError("");
 
 
 
-// if (!activeAccount) {
-//   setError("No MetaMask account connected. Please connect your wallet.");
-//   return;
-// }
-
-// if (activeAccount !== window.ethereum.selectedAddress) {
-//   setError("MetaMask account mismatch. Please select the correct account.");
-//   console.error("MetaMask account mismatch. Please select the correct account.");
-//   return;
-// }
-
-
-
 }
-      // const privateKey = await registerUser(name, email);
-      // setSuccessMessage(`Registration successful! Your private key is: ${privateKey}`);
-      // setError("");
-
-
-
-
-
-
-// const accounts = await web3.eth.getAccounts(); // Get the user's MetaMask account
-
-// const activeAccount = accounts[0];
-
-// if (activeAccount !== window.ethereum.selectedAddress) {
-//   setError("The selected MetaMask account does not match the active account.");
-//   console.error("MetaMask account mismatch:", activeAccount, window.ethereum.selectedAddress);
-//   return;
-// }
-
-// console.log("Connected MetaMask Account:", activeAccount);
-// // const user = await contract.methods.getUser(accounts[0]).call(); // Query the user
-// // console.log("Registered User Details:", user);
-
-// // if (accounts.length === 0) {
-// //   console.error("No MetaMask accounts found!");
-// //   setError("MetaMask account not found. Please connect your wallet.");
-// //   return;
-// // }
-
-// // Fetch user data from the contract
-
-
-// if (user.name && user.email) {
-//   console.log("Registered User Details:", user);
-//   setSuccessMessage(`User Found: Name - ${user.name}, Email - ${user.email}`);
-// } else {
-//   console.log("No user registered with this account.");
-//   setError("No user registered with this account.");
-// }
-// } catch (err) {
-// console.error(err);
-// setError("Registration failed. Please try again.");
-// setSuccessMessage("");
-// }
-// };
-
-
-
-
-
-
-
-
-
-
-
-// Fetch the registered user details from the contract
-// const web3 = await getWeb3(); // Ensure Web3 is initialized
-// const contract = await getContract(web3); // Get the contract instance
-// const accounts = await web3.eth.getAccounts(); // Get the user's MetaMask account
-// const user = await contract.methods.getUser(accounts[0]).call(); // Fetch user data
-// if (accounts.length === 0) {
-//   console.error("No MetaMask accounts found!");
-//   return;
-// }
-// console.log("Registered User Details:", user); // Log the details to the console for verification
-
-
-
-
-
-
-//     } catch (err) {
-//       console.error(err);
-//       setError("Registration failed. Please try again.");
-//       setSuccessMessage("");
-//     }
-
-
-
-
-
-
-
-    
-//   };
-      
   return (
+
+
+<div
+      style={{
+        backgroundImage: `url(${bgImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+
+
+
+
+
+
     <CoverLayout image={bgImage}>
-      <Card>
+      <Card style={{ width: "400px", padding: "24px" }}>
         <MDBox
           variant="gradient"
           bgColor="info"
@@ -210,7 +132,14 @@ setError("");
                 variant="standard"
                 fullWidth
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  setError(""); // Clear the error state
+                }}
+
+
+                // onChange={(e) => setName(e.target.value)}
+                
               />
             </MDBox>
             <MDBox mb={2}>
@@ -220,7 +149,13 @@ setError("");
                 variant="standard"
                 fullWidth
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+
+
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setError(""); // Clear the error state
+                // onChange={(e) => setEmail(e.target.value)}
+              }}
               />
             </MDBox>
             
@@ -279,6 +214,10 @@ setError("");
         </MDBox>
       </Card>
     </CoverLayout>
+    </div>
+
+
+
   );
 }
 

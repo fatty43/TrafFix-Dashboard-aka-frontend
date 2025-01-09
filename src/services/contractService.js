@@ -1,7 +1,7 @@
 // import Web3 from "web3";
 import Grievance from "../contracts/Grievance.json";
 
-const CONTRACT_ADDRESS = "0x16725178B2d489D01afea7CD071074c680bb28AC";
+const CONTRACT_ADDRESS = " 0xAc9Be5d29f1F9CF261C668CEE0c42cF5f60089D5";
 
 // Export getWeb3
 export const getWeb3 = async () => {

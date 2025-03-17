@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 contract Grievance {
@@ -7,6 +7,9 @@ contract Grievance {
         address user;
         string description;
         string officerName;
+        string date;  // New field
+        string time;  // New field
+        string location;  // New field
         uint timestamp;
         string status; // e.g., "Filed", "Under Review", "Resolved"
     }
@@ -17,12 +20,21 @@ contract Grievance {
 
     event ComplaintFiled(uint id, address user, string status);
 
-    function fileComplaint(string memory description, string memory officerName) public {
+    function fileComplaint(
+        string memory description, 
+        string memory officerName, 
+        string memory date, 
+        string memory time, 
+        string memory location
+    ) public {
         complaints[complaintCount] = Complaint(
             complaintCount,
             msg.sender,
             description,
             officerName,
+            date,
+            time,
+            location,
             block.timestamp,
             "Filed"
         );

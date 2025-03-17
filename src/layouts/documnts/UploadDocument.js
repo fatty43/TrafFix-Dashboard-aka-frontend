@@ -1,8 +1,9 @@
-// import { useState } from "react";
+// import { useState, useCallback, useEffect } from "react";
 import { ethers } from "ethers";
+import React, { useState, useCallback, useEffect } from "react";
+
 import axios from "axios";
-import { getWeb3, getContract } from "services/docuploadser"; 
-import React, { useState ,useCallback, useEffect } from "react";
+import { getWeb3, getContract } from "services/docuploadser";
 
 import Card from "@mui/material/Card";
 import { Checkbox, MenuItem, Select, TextField } from "@mui/material";
@@ -14,11 +15,14 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 import bgImage from "assets/images/traffic-light-1360645_1280.jpg";
 
-const IPFS_API_KEY = "2a5fdc47aaf3fa0db3c4"; 
+// ✅ Import Dashboard Layout and Navbar
+import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+
+const IPFS_API_KEY = "2a5fdc47aaf3fa0db3c4";
 const IPFS_SECRET_API_KEY = "a912ce045d894c1455b7bf84d9a208f7a71962d224b3eee959620f5affcc83f1";
 
 function UploadDocument() {
-  
   const [cnic, setCnic] = useState("");
   const [documentType, setDocumentType] = useState("");
   const [description, setDescription] = useState("");
@@ -27,37 +31,24 @@ function UploadDocument() {
   const [successMessage, setSuccessMessage] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [walletAddress, setWalletAddress] = useState("");
-// 📌 Track state changes
-useEffect(() => {
-  console.log("Updated CNIC:", cnic);
-}, [cnic]);
 
-useEffect(() => {
-  console.log("Updated Document Type:", documentType);
-}, [documentType]);
-
-useEffect(() => {
-  console.log("Updated File:", file);
-}, [file]);
   const connectWallet = useCallback(async () => {
     try {
       if (window.ethereum) {
         const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
         setWalletAddress(accounts[0]);
-        console.log("Connected wallet:", accounts[0]); // Debugging log
-        setWalletAddress(accounts[0]); //  Prevents unnecessary re-renders
-        setError("");
+        console.log("Connected wallet:", accounts[0]);
       } else {
-        // setError("MetaMask is not installed. Please install MetaMask.");
+        setError("MetaMask is not installed. Please install MetaMask.");
       }
     } catch (err) {
-      // setError("Failed to connect MetaMask. Please try again.");
+      setError("Failed to connect MetaMask. Please try again.");
     }
   }, []);
 
   const validateFile = (file) => {
     const allowedTypes = ["image/jpeg", "image/png", "application/pdf"];
-    if (!allowedTypes.includes(file.type)) {
+    if (!file || !allowedTypes.includes(file.type)) {
       setError("Only JPG, PNG, and PDF files are allowed.");
       return false;
     }
@@ -65,9 +56,7 @@ useEffect(() => {
   };
 
   const uploadToIPFS = async () => {
-    if (!file || !validateFile(file)) {
-      return null;
-    }
+    if (!validateFile(file)) return null;
 
     setIsUploading(true);
     setError("");
@@ -85,8 +74,10 @@ useEffect(() => {
         },
       });
 
+      const ipfsHash = res.data.IpfsHash;
+      console.log("IPFS Upload Successful! Hash:", ipfsHash);
       setIsUploading(false);
-      return res.data.IpfsHash; 
+      return ipfsHash;
     } catch (err) {
       setError("IPFS upload failed. Please try again.");
       setIsUploading(false);
@@ -94,24 +85,18 @@ useEffect(() => {
     }
   };
 
-  const uploadToBlockchain = useCallback(async (e) => {
-    debugger
-    console.log("Submit button clicked"); // ✅ Debugging log
-    
-    console.log("CNIC:", cnic);
-console.log("Document Type:", documentType);
-console.log("File:", file);
+  const uploadToBlockchain = async (e) => {
     e.preventDefault();
-    
-    // if (!walletAddress) {
-    //   setError("Please connect your MetaMask wallet first.");
-    //   return;
-    // }
+    setError("");
+    setSuccessMessage("");
+
+    if (!walletAddress) {
+      setError("Please connect your MetaMask wallet first.");
+      return;
+    }
     if (!cnic.trim() || !documentType || !file) {
-      
-    //  setError("All fields are required.");
-  // setError(""); // Clear previous errors
-       return;
+      setError("All fields are required.");
+      return;
     }
 
     const ipfsHash = await uploadToIPFS();
@@ -128,54 +113,41 @@ console.log("File:", file);
 
       console.log("Transaction successful:", tx);
       setSuccessMessage(`Document uploaded successfully! IPFS Hash: ${ipfsHash}`);
-      setError("");
     } catch (err) {
       console.error("Blockchain upload failed:", err);
       setError("Failed to store document on blockchain. Please try again.");
     }
-  }, []);
+  };
 
   return (
+
+<DashboardLayout>
+<DashboardNavbar />
+
+
+
     <div
-    style={{
+      style={{
         backgroundImage: `url(${bgImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
         height: "100vh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         padding: "10px",
-        // marginTop: "-50px", // Moves the form slightly upwards
-        
-
       }}
     >
-      <CoverLayout >
-        <Card style={{ width: "350pxs", padding: "20px" }}>
-          <MDBox
-            variant="gradient"
-            bgColor="info"
-            borderRadius="lg"
-            coloredShadow="success"
-            mx={2}
-            mt={-3}
-            p={3}
-            mb={1}
-            textAlign="center"
-          >
-            <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+      <CoverLayout>
+        <Card style={{ width: "400px", padding: "20px" }}>
+          <MDBox variant="gradient" bgColor="info" borderRadius="lg" coloredShadow="success" p={3} textAlign="center">
+            <MDTypography variant="h4" fontWeight="medium" color="white">
               Upload Your Document
-            </MDTypography>
-            <MDTypography display="block" variant="button" color="white" my={1}>
-              Store your documents securely on the blockchain
             </MDTypography>
           </MDBox>
 
           <MDBox pt={2} pb={2} px={2}>
-            <MDBox component="form" role="form" onSubmit={(e) => uploadToBlockchain(e)}>
-              
+            <MDBox component="form" onSubmit={uploadToBlockchain}>
               <MDBox mb={2} textAlign="center">
                 <MDButton variant="outlined" color="info" onClick={connectWallet}>
                   {walletAddress ? `Connected: ${walletAddress.slice(0, 6)}...` : "Connect Wallet"}
@@ -183,28 +155,11 @@ console.log("File:", file);
               </MDBox>
 
               <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  label="CNIC Number"
-                  variant="standard"
-                  fullWidth
-                  value={cnic}
-                  onChange={(e) => {                                    // chnged this oart
-                    console.log("CNIC changed to:", e.target.value); // Debugging
-                    setCnic(e.target.value);
-                  }}
-                  required
-                />
+                <MDInput type="text" label="CNIC Number" fullWidth value={cnic} onChange={(e) => setCnic(e.target.value)} required />
               </MDBox>
 
               <MDBox mb={2}>
-                <Select
-                  fullWidth
-                  value={documentType}
-                  onChange={(e) => setDocumentType(e.target.value)}
-                  displayEmpty
-                  variant="standard"
-                >
+                <Select fullWidth value={documentType} onChange={(e) => setDocumentType(e.target.value)} displayEmpty>
                   <MenuItem value="" disabled>Select Document Type</MenuItem>
                   <MenuItem value="CNIC Copy">CNIC Copy</MenuItem>
                   <MenuItem value="Passport">Passport</MenuItem>
@@ -213,45 +168,25 @@ console.log("File:", file);
               </MDBox>
 
               <MDBox mb={2}>
-                <TextField
-                  multiline
-                  rows={3}
-                  fullWidth
-                  placeholder="Enter document description (optional)"
-                  variant="standard"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                />
+                <TextField multiline rows={3} fullWidth placeholder="Enter document description (optional)" value={description} onChange={(e) => setDescription(e.target.value)} />
               </MDBox>
 
               <MDBox mb={2}>
-                <MDInput
-                  type="file"
-                  variant="standard"
-                  fullWidth
-                  onChange={(e) => {
-                    if (e.target.files.length > 0) {
-                      let selectedFile = e.target.files[0]; // ✅ Declare selectedFile properly
-                      console.log("File selected:", selectedFile); // Debugging log
-                      setFile(selectedFile);
-                    }
-                  }}
-                  required
-                />
+                <MDInput type="file" fullWidth onChange={(e) => setFile(e.target.files[0])} required />
               </MDBox>
 
-              <MDBox display="flex" alignItems="center" ml={-1}>
+              <MDBox display="flex" alignItems="center">
                 <Checkbox />
-                <MDTypography variant="button" fontWeight="regular" color="text" sx={{ cursor: "pointer", ml: -1 }}>
+                <MDTypography variant="button" fontWeight="regular" color="text">
                   &nbsp;&nbsp;I agree to the&nbsp;
                 </MDTypography>
-                <MDTypography component="a" href="#" variant="button" fontWeight="bold" color="info" textGradient>
+                <MDTypography component="a" href="#" variant="button" fontWeight="bold" color="info">
                   Terms and Conditions
                 </MDTypography>
               </MDBox>
 
               <MDBox mt={4} mb={1}>
-                <MDButton variant="gradient" color="info" fullWidth type="submit" >
+                <MDButton variant="gradient" color="info" fullWidth type="submit" disabled={isUploading}>
                   {isUploading ? "Uploading..." : "Upload Document"}
                 </MDButton>
               </MDBox>
@@ -263,6 +198,7 @@ console.log("File:", file);
         </Card>
       </CoverLayout>
     </div>
+    </DashboardLayout>
   );
 }
 

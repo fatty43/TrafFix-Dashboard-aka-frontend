@@ -1,8 +1,8 @@
-// React and hooks
+// // React and hooks
+
 import React, { useState, useEffect } from "react";
 // MetaMask and contract methods
-// import { getWeb3, getGrievanceContract } from "../../services/contractService";
-import { getWeb3, fileComplaint, getUserComplaints } from "../../services/contractService";
+import { getWeb3, getGrievanceContract } from "../../services/contractService";
 
 // Material-UI components
 import Card from "@mui/material/Card";
@@ -27,14 +27,8 @@ function GrievancePage() {
   const [description, setDescription] = useState("");
   const [officerName, setOfficerName] = useState("");
   const [category, setCategory] = useState("Misconduct");
-
-
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
-  const [location, setLocation] = useState("");
-
-  const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
   const [complaints, setComplaints] = useState([]);
 
   // Complaint categories
@@ -43,16 +37,12 @@ function GrievancePage() {
   // Fetch user complaints
   const fetchComplaints = async () => {
     try {
-
-
       const web3 = await getWeb3();
       const contract = await getGrievanceContract(web3);
       const accounts = await web3.eth.getAccounts();
       const result = await contract.methods.getComplaintsByUser(accounts[0]).call();
       setComplaints(result);
     } catch (err) {
-
-      
       console.error("Error fetching complaints:", err);
     }
   };
@@ -64,8 +54,8 @@ function GrievancePage() {
   // Submit a complaint
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!description || !officerName || !date || !time || !location) {
-      setError("All fields are required.");
+    if (!description || !officerName || !date || !time ) {
+      toast.error("All fields are required.");
       return;
     }
     try {
@@ -73,7 +63,9 @@ function GrievancePage() {
       const contract = await getGrievanceContract(web3);
       const accounts = await web3.eth.getAccounts();
 
-      await contract.methods.fileComplaint(description, officerName, date, time, location).send({ from: accounts[0] });
+      await contract.methods
+        .fileComplaint(category, officerName, date, time, description)
+        .send({ from: accounts[0] });
 
       toast.success("Complaint filed successfully!");
       setDescription("");
@@ -81,7 +73,6 @@ function GrievancePage() {
       setCategory("Misconduct");
       setDate("");
       setTime("");
-      setLocation("");
       fetchComplaints();
     } catch (err) {
       console.error("Error filing complaint:", err);
@@ -90,169 +81,60 @@ function GrievancePage() {
   };
 
   return (
-    <CoverLayout image={bgImage}>
+    <div
+    style={{
+      backgroundImage: `url(${bgImage})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      height: "100vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "10px",
+    }} 
+    >
+    <CoverLayout >
       <ToastContainer />
       <Card>
-        <MDBox
-          variant="gradient"
-          bgColor="info"
-          borderRadius="lg"
-          coloredShadow="success"
-           alignItems="center"
-          mx={2}
-          mt={-3}
-          p={3}
-          mb={1}
-          textAlign="center"
-        >
-          <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-            Grievance 
-          </MDTypography>
-          <MDTypography display="block" variant="button" color="white" my={1}>
-          File a complaint or track existing grievances
-          </MDTypography>
+        <MDBox textAlign="center" p={3}>
+          <MDTypography variant="h4">Grievance</MDTypography>
+          <MDTypography>File a complaint or track existing grievances</MDTypography>
         </MDBox>
-        <MDBox pt={4} pb={3} px={3}>
-          <MDBox component="form" role="form" onSubmit={handleSubmit}>
-            <MDBox mb={2}>
-              <MDInput
-                type="text"
-                label="Officer Name"
-                variant="standard"
-                fullWidth
-                value={officerName}
-                onChange={(e) => setOfficerName(e.target.value)}
-              />
-            </MDBox>
-            <MDBox mb={2}>
-              <Select
-                fullWidth
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                {categories.map((cat, idx) => (
-                  <MenuItem key={idx} value={cat}>
-                    {cat}
-                  </MenuItem>
-                ))}
-              </Select>
-            </MDBox>
-            <MDBox mb={2}>
-              <MDInput
-                type="text"
-                label="Location"
-                variant="standard"
-                fullWidth
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-              />
-            </MDBox>
-            <MDBox mb={2}>
-            
-              <MDInput
-                type="date"
-                placeholder="MM/DD/YYYY" // Set placeholder instead of label
-                variant="standard"
-                fullWidth
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-               
-              />
-            </MDBox>
-            <MDBox mb={2}>
-              <MDInput
-                type="time"
-                placeholder="-:-:-:" // Set placeholder instead of label
-                variant="standard"
-                fullWidth
-                value={time}
-                onChange={(e) => setTime(e.target.value)}
-              />
-            </MDBox>
-
-
-
-
-            <MDBox mb={2}>
-              <MDInput
-                multiline
-                rows={4}
-                label="Description"
-                variant="standard"
-                fullWidth
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </MDBox>
-            <MDBox display="flex" alignItems="center" ml={-1}>
-              <Checkbox />
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                color="text"
-                sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-              >
-                &nbsp;&nbsp;I agree to the&nbsp;
-              </MDTypography>
-              <MDTypography
-                component="a"
-                href="#"
-                variant="button"
-                fontWeight="bold"
-                color="info"
-                textGradient
-              >
-                Terms and Conditions
-              </MDTypography>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton
-                variant="gradient"
-                color="info"
-                fullWidth
-                type="submit"
-              >
-                File Complaint
-              </MDButton>
-            </MDBox>
-          </MDBox>
+        <MDBox component="form" onSubmit={handleSubmit} p={3}>
+          <MDInput label="Officer Name" fullWidth value={officerName} onChange={(e) => setOfficerName(e.target.value)} />
+          <Select fullWidth value={category} onChange={(e) => setCategory(e.target.value)}>
+            {categories.map((cat, idx) => (
+              <MenuItem key={idx} value={cat}>{cat}</MenuItem>
+            ))}
+          </Select>
+          
+          <MDInput type="date" fullWidth value={date} onChange={(e) => setDate(e.target.value)} />
+          <MDInput type="time" fullWidth value={time} onChange={(e) => setTime(e.target.value)} />
+          <MDInput multiline rows={4} label="Description" fullWidth value={description} onChange={(e) => setDescription(e.target.value)} />
+          {/* <MDBox mt={2}>
+            <Checkbox /> I agree to the <a href="#">Terms and Conditions</a>
+          </MDBox> */}
+          <MDButton variant="contained" color="primary" fullWidth type="submit">File Complaint</MDButton>
         </MDBox>
-        <MDBox pt={4} pb={3} px={3}>
-          <MDTypography variant="h5" fontWeight="medium" mt={2}>
-            Past Complaints
-          </MDTypography>
+        <MDBox p={3}>
+          <MDTypography variant="h5">Past Complaints</MDTypography>
           {complaints.map((complaint, idx) => (
             <Card key={idx} sx={{ my: 2, p: 2 }}>
-              <MDTypography>
-                <strong>Category:</strong> {complaint.category}
-              </MDTypography>
-              <MDTypography>
-                <strong>Officer:</strong> {complaint.officerName}
-              </MDTypography>
-              <MDTypography>
-              <MDTypography>
-                <strong>Location:</strong> {complaint.location}
-              </MDTypography>
-              <MDTypography>
-                <strong>Date:</strong> {complaint.date}
-              </MDTypography>
-              <MDTypography>
-                <strong>Time:</strong> {complaint.time}
-              </MDTypography>
-                <strong>Description:</strong> {complaint.description}
-              </MDTypography>
-              <MDTypography>
-                <strong>Status:</strong> {complaint.status}
-              </MDTypography>
-              <MDTypography>
-                <strong>Timestamp:</strong>{" "}
-                {new Date(complaint.timestamp * 1000).toLocaleString()}
-              </MDTypography>
+              <MDTypography><strong>Category:</strong> {complaint.category}</MDTypography>
+              <MDTypography><strong>Officer:</strong> {complaint.officerName}</MDTypography>
+              <MDTypography><strong>Date:</strong> {complaint.date}</MDTypography>
+              <MDTypography><strong>Time:</strong> {complaint.time}</MDTypography>
+              <MDTypography><strong>Description:</strong> {complaint.description}</MDTypography>
+              <MDTypography><strong>Status:</strong> {complaint.status}</MDTypography>
+              <MDTypography><strong>Timestamp:</strong> {new Date(Number(complaint.timestamp) * 1000).toLocaleString()}</MDTypography>
+
+              {/* <MDTypography><strong>Timestamp:</strong> {new Date(complaint.timestamp * 1000).toLocaleString()}</MDTypography> */}
             </Card>
           ))}
         </MDBox>
       </Card>
     </CoverLayout>
+    </div>
   );
 }
 

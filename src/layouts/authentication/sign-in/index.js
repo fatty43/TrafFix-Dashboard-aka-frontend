@@ -8,22 +8,15 @@ const LoginPage = () => {
   const [walletAddress, setWalletAddress] = useState("");
   const [metaMaskError, setMetaMaskError] = useState("");
   const [isRequestPending, setIsRequestPending] = useState(false); // Add this state
+  const [isRedirecting, setIsRedirecting] = useState(false); // New state for redirect indication
+
   const navigate = useNavigate();
-
-
-
-
-
-
-
-
-
-
-
 
   const handleMetaMaskLogin = async () => {
     if (window.ethereum) {
       setIsRequestPending(true); // Mark as pending
+      setIsRedirecting(false); // Reset redirecting state
+  
       try {
         const accounts = await window.ethereum.request({
           method: "eth_requestAccounts",
@@ -40,7 +33,15 @@ const LoginPage = () => {
           const user = await loginUser(connectedWallet); // Check registration
           if (user) {
             console.log("User details:", user);
-            navigate("/dashboard"); // Navigate to dashboard after successful login
+  
+            // Show message before redirecting
+            setIsRedirecting(true); 
+  
+            // Ensure delay before navigating
+            setTimeout(() => {
+              console.log("Redirecting to dashboard...");
+              navigate("/dashboard"); 
+            }, 1000);
           } else {
             setMetaMaskError("User is not registered. Please register first.");
             console.warn("User not registered:", connectedWallet);
@@ -57,14 +58,97 @@ const LoginPage = () => {
         } else {
           setMetaMaskError("Failed to connect to MetaMask. Please try again.");
         }
-        console.error("MetaMask connection error:", error);
       } finally {
-        setIsRequestPending(false); // Mark as not pending
+        setIsRequestPending(false);
       }
     } else {
       setMetaMaskError("MetaMask is not installed. Please install it.");
     }
   };
+  
+//   const handleMetaMaskLogin = async () => {
+//     if (window.ethereum) {
+//       setIsRequestPending(true); // Mark as pending
+//       try {
+//         const accounts = await window.ethereum.request({
+//           method: "eth_requestAccounts",
+//         });
+  
+//         const connectedWallet = accounts[0];
+//         setWalletAddress(connectedWallet); // Save the wallet address
+//         setMetaMaskError(""); // Clear any error
+  
+//         console.log("Connected to MetaMask with wallet:", connectedWallet);
+  
+//         // Check if the user is registered
+//         try {
+//           const user = await loginUser(connectedWallet); // Check registration
+//           if (user) {
+//             console.log("User details:", user);
+//             // navigate("/dashboard"); // Navigate to dashboard after successful login
+
+// // Show message before redirecting
+// setIsRedirecting(true); 
+
+//             // Wait for 3 seconds before navigating
+//           setTimeout(() => {
+//             navigate("/dashboard"); 
+//           }, 1000);
+//           } else {
+//             setMetaMaskError("User is not registered. Please register first.");
+//             console.warn("User not registered:", connectedWallet);
+//           }
+//         } catch (error) {
+//           setMetaMaskError("Failed to verify user registration.");
+//           console.error("Registration verification error:", error.message);
+
+
+//         }
+//       } catch (error) {
+//         if (error.code === 4001) {
+//           setMetaMaskError("Connection request was rejected by the user.");
+//         } else if (error.code === -32002) {
+//           setMetaMaskError("A connection request is already pending. Please wait.");
+//         } else {
+//           setMetaMaskError("Failed to connect to MetaMask. Please try again.");
+//         }
+//       } finally {
+//         setIsRequestPending(false);
+//       }
+//     } else {
+//       setMetaMaskError("MetaMask is not installed. Please install it.");
+//     }
+//   };
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //       }
+  //     } catch (error) {
+  //       if (error.code === 4001) {
+  //         setMetaMaskError("Connection request was rejected by the user.");
+  //       } else if (error.code === -32002) {
+  //         setMetaMaskError("A connection request is already pending. Please wait.");
+  //       } else {
+  //         setMetaMaskError("Failed to connect to MetaMask. Please try again.");
+  //       }
+  //       console.error("MetaMask connection error:", error);
+  //     } finally {
+  //       setIsRequestPending(false); // Mark as not pending
+  //     }
+  //   } else {
+  //     setMetaMaskError("MetaMask is not installed. Please install it.");
+  //   }
+  // };
   
 
 

@@ -1,4 +1,5 @@
-// import Web3 from "web3";
+ import Web3 from "web3";
+
 import Grievance from "../contracts/Grievance.json";
 
 const CONTRACT_ADDRESS = "0xF1DE46F91ae257576654A91618240c33d0cdE4eB";

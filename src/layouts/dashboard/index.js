@@ -1,44 +1,43 @@
-// @mui material components
-import Grid from "@mui/material/Grid";
+// import Grid from "@mui/material/Grid";
+import { Box } from "@mui/material";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 
-// Material Dashboard 2 React example components
+// Layout Components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import Footer from "examples/Footer";
+import Grid from "@mui/material/Grid";
+
+
+
+
+// Dashboard Components
 import LinkVehicle from "layouts/dashboard/components/LinkVehicle";
 import FeatureButtons from "layouts/dashboard/components/FeatureButtons";
-import DashboardHero from "layouts/dashboard/components/Herosection"; 
-
-
-
-import Footer from "examples/Footer";
-import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
-import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
-import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
-
-// Data
-import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
-import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
-
-// Dashboard components
-import Projects from "layouts/dashboard/components/Projects";
-import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
+import DashboardHero from "layouts/dashboard/components/Herosection";
 
 function Dashboard() {
-  // const { sales, tasks } = reportsLineChartData;
-return (
-  <DashboardLayout>
+  return (
+    <DashboardLayout>
       <DashboardNavbar />
-      {/* <h1 style={{ textAlign: "center", color: "bloack" }}>Document Wallet To Empower Citizens</h1> */}
-      <DashboardHero /> {/* New Curved Section */}
-      <MDBox p={2}>
-        <LinkVehicle />
-        <FeatureButtons />
-      </MDBox>
+
+      <Box sx={{ px: 3 }}>
+      <Grid container spacing={3} alignItems="center" justifyContent="center">          {/* Right Section */}
+          <Grid item xs={12} md={5}>
+            <DashboardHero />
+            <MDBox p={5}>
+              {/* <LinkVehicle /> */}
+              {/* <FeatureButtons /> */}
+            </MDBox>
+          </Grid>
+        </Grid>
+      </Box>
+
+      <Footer />
     </DashboardLayout>
   );
-};
+}
 
 export default Dashboard;

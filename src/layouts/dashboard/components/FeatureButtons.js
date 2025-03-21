@@ -6,10 +6,10 @@ import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 
 const features = [
-  { label: "Bike Insurance", icon: <DirectionsBikeIcon />, color: "secondary" },
+  // { label: "Bike Insurance", icon: <DirectionsBikeIcon />, color: "secondary" },
   { label: "Car Insurance", icon: <DirectionsCarIcon />, color: "primary" },
   { label: "Challan generation", icon: <MonetizationOnIcon />, color: "success" },
-  { label: "Sell Your Car", icon: <StorefrontIcon />, color: "warning" },
+  // { label: "Sell Your Car", icon: <StorefrontIcon />, color: "warning" },
 ];
 
 const FeatureButtons = () => {

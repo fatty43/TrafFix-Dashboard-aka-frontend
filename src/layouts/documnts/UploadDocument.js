@@ -13,14 +13,16 @@ import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import CoverLayout from "layouts/authentication/components/CoverLayout";
 
-import bgImage from "assets/images/traffic-light-1360645_1280.jpg";
+// import bgImage from "assets/images/traffic-light-1360645_1280.jpg";
+import bgImage from "assets/images/signnnnup.jpg";
+
 
 // ✅ Import Dashboard Layout and Navbar
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-
-const IPFS_API_KEY = "2a5fdc47aaf3fa0db3c4";
-const IPFS_SECRET_API_KEY = "a912ce045d894c1455b7bf84d9a208f7a71962d224b3eee959620f5affcc83f1";
+const JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiI2ZGQwYTU5My1jZjdmLTQyZmUtOWU4NS0zYmI0Y2Q0ZWI1MDQiLCJlbWFpbCI6ImZhdGltYWtpcm1hbmk5QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwaW5fcG9saWN5Ijp7InJlZ2lvbnMiOlt7ImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxLCJpZCI6IkZSQTEifSx7ImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxLCJpZCI6Ik5ZQzEifV0sInZlcnNpb24iOjF9LCJtZmFfZW5hYmxlZCI6ZmFsc2UsInN0YXR1cyI6IkFDVElWRSJ9LCJhdXRoZW50aWNhdGlvblR5cGUiOiJzY29wZWRLZXkiLCJzY29wZWRLZXlLZXkiOiI1ZDZkOWVhN2NjMTY4NjdhM2I4YSIsInNjb3BlZEtleVNlY3JldCI6ImQ3OTFmN2Y5MTRlMzA3MDI3NGRjMjQ2YTgwYzNkYTAzMGQ3N2E5ZjViNTk3ZTMxMjYzNWYxZTQ4Y2JhODc4YzIiLCJleHAiOjE3NzM5ODI0NTR9._e8lPdT3ALQiUu35W8f41bNKXIZkh8b3io0_A5fKBbY"; // Replace with your Pinata JWT Token
+// const IPFS_API_KEY = "be5474947e6780202251";
+// const IPFS_SECRET_API_KEY = "683e091092f9169e403146ab8ecc704d59dfa8f8d47a5a440528a44f5f2bbdd7";
 
 function UploadDocument() {
   const [cnic, setCnic] = useState("");
@@ -65,12 +67,28 @@ function UploadDocument() {
     const formData = new FormData();
     formData.append("file", file);
 
+// ✅ Add metadata to mark as private
+const metadata = JSON.stringify({
+  name: file.name,
+  keyvalues: { private: "true" }
+});
+formData.append("pinataMetadata", metadata)
+
+// ✅ Add pinataOptions to disable public gateway access
+const options = JSON.stringify({
+  cidVersion: 1,
+  wrapWithDirectory: false,  
+  visibility: "unlisted"  // 🔹 This makes the file unlisted in Pinata
+});
+formData.append("pinataOptions", options);
+
+
     try {
       const res = await axios.post("https://api.pinata.cloud/pinning/pinFileToIPFS", formData, {
         headers: {
+         
+          "Authorization": `Bearer ${JWT}`, // 🔹 Use JWT instead of API key
           "Content-Type": "multipart/form-data",
-          pinata_api_key: IPFS_API_KEY,
-          pinata_secret_api_key: IPFS_SECRET_API_KEY,
         },
       });
 
@@ -162,6 +180,7 @@ function UploadDocument() {
                 <Select fullWidth value={documentType} onChange={(e) => setDocumentType(e.target.value)} displayEmpty>
                   <MenuItem value="" disabled>Select Document Type</MenuItem>
                   <MenuItem value="CNIC Copy">CNIC Copy</MenuItem>
+                  <MenuItem value="Vehicle Original Copy">Vehicle Original Copy</MenuItem>
                   <MenuItem value="Passport">Passport</MenuItem>
                   <MenuItem value="Driving License">Driving License</MenuItem>
                 </Select>

@@ -1,17 +1,4 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 
 // prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
@@ -79,10 +66,12 @@ function MDSnackbar({ color, icon, title, dateTime, content, close, bgWhite, ...
         borderRadius="md"
         p={1}
         sx={{
-          backgroundColor: ({ palette }) =>
-            darkMode ? palette.background.card : palette[color] || palette.white.main,
+          // backgroundColor: "black", // 🔥 Set the snackbar background to black
+          // If you want to match the sidebar, replace "black" with:
+           backgroundColor: ({ palette }) => palette.dark.main,
         }}
       >
+      
         <MDBox
           display="flex"
           justifyContent="space-between"

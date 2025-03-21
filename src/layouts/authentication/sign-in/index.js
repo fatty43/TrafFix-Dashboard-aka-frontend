@@ -36,13 +36,16 @@ const LoginPage = () => {
   
             // Show message before redirecting
             setIsRedirecting(true); 
+            console.log("✅ User found! Redirecting in 2 seconds...");
   
             // Ensure delay before navigating
             setTimeout(() => {
               console.log("Redirecting to dashboard...");
-              navigate("/dashboard"); 
-            }, 1000);
-          } else {
+              navigate("/dashboard", { replace: true });
+            }, 2000);
+
+          } 
+          else {
             setMetaMaskError("User is not registered. Please register first.");
             console.warn("User not registered:", connectedWallet);
           }

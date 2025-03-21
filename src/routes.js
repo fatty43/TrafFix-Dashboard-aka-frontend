@@ -20,15 +20,9 @@ const routes = [
     name: "Sign Up",
     key: "sign-up",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "sign-up",
+    route: "/sign-up",
     component: <SignUp />,
   },
-
-
-
-
-
-
 
 
   {
@@ -56,7 +50,7 @@ const routes = [
     name: "Upload Document", // New Route
     key: "upload-document",
     icon: <Icon fontSize="small">upload_file</Icon>,
-    route: "/",
+    route: "/upload-document",
     component: <UploadDocument />, // Ensure the path is correct
   },
 

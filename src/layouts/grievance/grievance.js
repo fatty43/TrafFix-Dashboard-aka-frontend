@@ -21,6 +21,8 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 import bgImage from "assets/images/signnnnup.jpg";
 // Toast styles
 import "react-toastify/dist/ReactToastify.css";
+import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 
 function GrievancePage() {
   // Form state
@@ -68,6 +70,7 @@ function GrievancePage() {
         .send({ from: accounts[0] });
 
       toast.success("Complaint filed successfully!");
+       setComplaints([]); // Clear complaints after filing a new one
       setDescription("");
       setOfficerName("");
       setCategory("Misconduct");
@@ -81,6 +84,10 @@ function GrievancePage() {
   };
 
   return (
+
+    <DashboardLayout>
+    <DashboardNavbar />
+
     <div
     style={{
       backgroundImage: `url(${bgImage})`,
@@ -111,12 +118,10 @@ function GrievancePage() {
           <MDInput type="date" fullWidth value={date} onChange={(e) => setDate(e.target.value)} />
           <MDInput type="time" fullWidth value={time} onChange={(e) => setTime(e.target.value)} />
           <MDInput multiline rows={4} label="Description" fullWidth value={description} onChange={(e) => setDescription(e.target.value)} />
-          {/* <MDBox mt={2}>
-            <Checkbox /> I agree to the <a href="#">Terms and Conditions</a>
-          </MDBox> */}
-          <MDButton variant="contained" color="primary" fullWidth type="submit">File Complaint</MDButton>
+          
+          <MDButton variant="contained" style={{ backgroundColor: "#007bff" }} fullWidth type="submit">File Complaint</MDButton>
         </MDBox>
-        <MDBox p={3}>
+        {/* <MDBox p={3}>
           <MDTypography variant="h5">Past Complaints</MDTypography>
           {complaints.map((complaint, idx) => (
             <Card key={idx} sx={{ my: 2, p: 2 }}>
@@ -129,12 +134,14 @@ function GrievancePage() {
               <MDTypography><strong>Timestamp:</strong> {new Date(Number(complaint.timestamp) * 1000).toLocaleString()}</MDTypography>
 
               {/* <MDTypography><strong>Timestamp:</strong> {new Date(complaint.timestamp * 1000).toLocaleString()}</MDTypography> */}
-            </Card>
-          ))}
-        </MDBox>
-      </Card>
+             </Card> 
+          {/* ))} */}
+        {/* </MDBox>
+      </Card>  */}
     </CoverLayout>
+    
     </div>
+    </DashboardLayout>
   );
 }
 

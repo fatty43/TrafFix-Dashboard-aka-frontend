@@ -11,6 +11,7 @@ import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import Link from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
+import { useNavigate } from "react-router-dom";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -37,6 +38,16 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = controller;
   const location = useLocation();
   const collapseName = location.pathname.replace("/", "");
+  const navigate = useNavigate(); // Initialize navigate
+
+
+
+
+  const handleLogout = () => {
+    localStorage.clear();  // Clear user authentication data
+    sessionStorage.clear();
+    navigate("/sign-in");  // Redirect to login page
+  };
 
   let textColor = "white";
 
@@ -166,14 +177,12 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
       <List>{renderRoutes}</List>
       <MDBox p={2} mt="auto">
         <MDButton
-          component="a"
-          target="_blank"
-          rel="noreferrer"
           variant="gradient"
-          color={sidenavColor}
+          color="light"  // Makes it red to indicate logout
           fullWidth
+          onClick={handleLogout}  // Call logout function on click
         >
-          WELCOME
+          SIGN OUT
         </MDButton>
       </MDBox>
     </SidenavRoot>

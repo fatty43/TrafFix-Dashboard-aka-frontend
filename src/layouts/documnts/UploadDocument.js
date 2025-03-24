@@ -194,7 +194,7 @@ formData.append("pinataOptions", options);
                 <MDInput type="file" fullWidth onChange={(e) => setFile(e.target.files[0])} required />
               </MDBox>
 
-              <MDBox display="flex" alignItems="center">
+              {/* <MDBox display="flex" alignItems="center">
                 <Checkbox />
                 <MDTypography variant="button" fontWeight="regular" color="text">
                   &nbsp;&nbsp;I agree to the&nbsp;
@@ -202,11 +202,11 @@ formData.append("pinataOptions", options);
                 <MDTypography component="a" href="#" variant="button" fontWeight="bold" color="info">
                   Terms and Conditions
                 </MDTypography>
-              </MDBox>
+              </MDBox> */}
 
               <MDBox mt={4} mb={1}>
                 <MDButton variant="gradient" color="info" fullWidth type="submit" disabled={isUploading}>
-                  {isUploading ? "Uploading..." : "Upload Document"}
+                  {isUploading ? "Uploading..." : "UPLOAD"}
                 </MDButton>
               </MDBox>
 

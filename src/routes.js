@@ -8,6 +8,7 @@ import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import GrievancePage from "layouts/grievance/grievance";
 import UploadDocument from "layouts/documnts/UploadDocument"; 
+import WelcomePage from "layouts/welcome/welcomepage";
 
 
 
@@ -17,13 +18,24 @@ import Icon from "@mui/material/Icon";
 const routes = [
   {
     type: "collapse",
+    name: "Welcome",
+    key: "welcome",
+    icon: <Icon fontSize="small">home</Icon>,
+    route: "/welcome",
+    component: <WelcomePage />,
+
+  },
+
+
+  {
+    type: "collapse",
     name: "Sign Up",
     key: "sign-up",
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/sign-up",
     component: <SignUp />,
   },
-
+  
 
   {
     type: "collapse",

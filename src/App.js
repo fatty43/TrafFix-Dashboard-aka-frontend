@@ -2,6 +2,8 @@ import { useState, useEffect, useMemo } from "react";
 
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import WelcomePage from "layouts/welcome/welcomepage"; // Adjust path if needed
+
 
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
@@ -39,6 +41,10 @@ import brandDark from "assets/images/logo-ct-dark.png";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function App() {
+
+
+  const location = useLocation();
+  const iswelcome = location.pathname === "/welcome"; // Check if it's Welcome Page
   const [controller, dispatch] = useMaterialUIController();
   const {
     miniSidenav,
@@ -159,15 +165,17 @@ export default function App() {
         )}
         {layout === "vr" && <Configurator />}
         <Routes>
+   
+          <Route path="/" element={<WelcomePage />} />
           {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/sign-up" />} />
+          <Route path="*" element={<Navigate to="/welcome" />} /> {/* ✅ Redirect all unknown routes to Welcome */}
         </Routes>
       </ThemeProvider>
     </CacheProvider>
   ) : (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
       <CssBaseline />
-      {layout === "dashboard" && (
+      {layout === "dashboard" && !iswelcome && ( // Hide sidebar only on Welcome Page
         <>
           <Sidenav
             color={sidenavColor}
@@ -183,8 +191,10 @@ export default function App() {
       )}
       {layout === "vr" && <Configurator />}
       <Routes>
-        {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/sign-up" />} />
+      <Route path="/welcome" element={<WelcomePage />} /> {/* ✅ WelcomePage as Default */}
+
+      {getRoutes(routes)}
+        <Route path="*" element={<Navigate to="/welcome" />} /> {/* ✅ Redirect to WelcomePage */}
       </Routes>
     </ThemeProvider>
   );

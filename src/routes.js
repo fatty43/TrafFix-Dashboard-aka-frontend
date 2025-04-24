@@ -17,6 +17,17 @@ import ChallanGeneration from "layouts/challangen/chllangeneration";
 import Icon from "@mui/material/Icon";
 
 const routes = [
+
+  {
+    type: "collapse",
+    name: "Dashboard",
+    key: "dashboard",
+    icon: <Icon fontSize="small">dashboard</Icon>,
+    route: "/dashboard",
+    component: <Dashboard />,
+  },
+
+
   {
     type: "collapse",
     name: "Welcome",
@@ -36,26 +47,20 @@ const routes = [
     route: "/sign-up",
     component: <SignUp />,
   },
-  
-
+   
   {
     type: "collapse",
-    name: "Dashboard",
-    key: "dashboard",
-    icon: <Icon fontSize="small">dashboard</Icon>,
-    route: "/dashboard",
-    component: <Dashboard />,
+    name: "Sign In",
+    key: "sign-in",
+    icon: <Icon fontSize="small">login</Icon>,
+    route: "/authentication/sign-in",
+    component: <SignIn />,
   },
+
+  
   
 
-  {
-    type: "collapse",
-    name: "profile",
-    key: "profile",
-    icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/profile",
-    component: <profile />,
-  },
+  
 
 
   {
@@ -68,15 +73,7 @@ const routes = [
   },
 
 
-  
-  {
-    type: "collapse",
-    name: "Sign In",
-    key: "sign-in",
-    icon: <Icon fontSize="small">login</Icon>,
-    route: "/authentication/sign-in",
-    component: <SignIn />,
-  },
+ 
   
 
 

@@ -3,7 +3,7 @@ import DocumentRegistry from "../contracts/DocumentRegistry.json";
 
 import axios from "axios";
 
-const CONTRACT_ADDRESS = "0x59ABEa80c54fE45e581a93DC582c20CcBCefaE81";
+const CONTRACT_ADDRESS = "0x6fecf43496e46d4eD5b4de9d46c31D5f57a9b2c2";
 
 // IPFS Credentials (Replace with actual credentials)
 const IPFS_API_KEY = "2a5fdc47aaf3fa0db3c4"; 

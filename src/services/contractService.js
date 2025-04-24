@@ -2,7 +2,7 @@
 
 import Grievance from "../contracts/Grievance.json";
 
-const CONTRACT_ADDRESS = "0xF1DE46F91ae257576654A91618240c33d0cdE4eB";
+const CONTRACT_ADDRESS = "0xD474dd227c0144C5A7488c55963241528ebd826C";
 
 // Export getWeb3
 export const getWeb3 = async () => {

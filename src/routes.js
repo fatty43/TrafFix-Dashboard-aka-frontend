@@ -9,7 +9,8 @@ import SignUp from "layouts/authentication/sign-up";
 import GrievancePage from "layouts/grievance/grievance";
 import UploadDocument from "layouts/documnts/UploadDocument"; 
 import WelcomePage from "layouts/welcome/welcomepage";
-
+import DocumentVerification from "layouts/DocVerf/docverf"
+import ChallanGeneration from "layouts/challangen/chllangeneration";
 
 
 // @mui icons
@@ -87,8 +88,27 @@ const routes = [
     route: "/grievance",
     component: <GrievancePage />,
   },
-
-
+  {
+    type: "collapse",
+    name: "Document Verification", // New Route
+    key: "document-verification",
+    icon: <Icon fontSize="small">check_circle</Icon>,
+    route: "/document-verification",
+    component: <DocumentVerification />, 
+  },
+  
+  {
+    type: "collapse",
+    name: "Challan Generation",
+    key: "challan-generation",
+    icon: <Icon fontSize="small">gavel</Icon>,
+    route: "/challan-generation",
+    component: <ChallanGeneration />,
+  },
+  
+  
 ];
+
+
 
 export default routes;

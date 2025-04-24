@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.18;
+// // SPDX-License-Identifier: MIT
+pragma solidity ^0.8.29;
 
 contract DocumentRegistry {
     struct Document {
@@ -11,8 +11,7 @@ contract DocumentRegistry {
         uint256 timestamp;
     }
 
-    mapping(address => Document[]) public userDocuments;
-    address[] public users;
+    mapping(string => Document[]) public documentsByCnic; // Mapping documents by CNIC
     
     event DocumentUploaded(
         address indexed uploadedBy,
@@ -39,22 +38,13 @@ contract DocumentRegistry {
             timestamp: block.timestamp
         });
         
-        userDocuments[msg.sender].push(newDocument);
+        documentsByCnic[_cnic].push(newDocument); // Storing document by CNIC
         
-        if (userDocuments[msg.sender].length == 1) {
-            users.push(msg.sender);
-        }
-
         emit DocumentUploaded(msg.sender, _cnic, _documentType, _description, _ipfsHash, block.timestamp);
     }
 
-    // Get all documents uploaded by a user
-    function getUserDocuments(address _user) public view returns (Document[] memory) {
-        return userDocuments[_user];
-    }
-    
-    // Get list of all users who uploaded documents
-    function getAllUsers() public view returns (address[] memory) {
-        return users;
+    // Get documents by CNIC
+    function getDocumentsByCNIC(string memory _cnic) public view returns (Document[] memory) {
+        return documentsByCnic[_cnic];
     }
 }

@@ -2,7 +2,9 @@ import { useState, useEffect, useMemo } from "react";
 
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import WelcomePage from "layouts/welcome/welcomepage"; // Adjust path if needed
+import WelcomePage from "layouts/welcome/welcomepage"; 
+// import DocmntVerf from "layouts/layoutsoffcr/DocmntVerf";
+// import officerRoutes from "routes2";
 
 
 // @mui material components
@@ -27,6 +29,8 @@ import themeDark from "assets/theme-dark";
 import rtlPlugin from "stylis-plugin-rtl";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
+;
+
 
 // Material Dashboard 2 React routes
 import routes from "routes";
@@ -39,6 +43,7 @@ import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 // import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 
 export default function App() {
 
@@ -193,7 +198,11 @@ export default function App() {
       <Routes>
       <Route path="/welcome" element={<WelcomePage />} /> {/* ✅ WelcomePage as Default */}
 
+
+
+
       {getRoutes(routes)}
+      
         <Route path="*" element={<Navigate to="/welcome" />} /> {/* ✅ Redirect to WelcomePage */}
       </Routes>
     </ThemeProvider>

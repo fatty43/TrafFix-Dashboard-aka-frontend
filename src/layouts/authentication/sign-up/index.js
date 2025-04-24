@@ -18,7 +18,7 @@ import MDButton from "components/MDButton";
 import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 // Images
-import bgImage from "assets/images/finale.jpeg";
+import bgImage from "assets/images/traffic-light-1360645_1280.jpg";
 
 function Cover() {
   const [name, setName] = useState("");
@@ -117,10 +117,10 @@ setError("");
           textAlign="center"
         >
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-            Create an account
+            Join us today
           </MDTypography>
           <MDTypography display="block" variant="button" color="white" my={1}>
-            Enter your name and email to register
+            Enter your Name and email to register
           </MDTypography>
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
@@ -159,17 +159,17 @@ setError("");
               />
             </MDBox>
             
-            {/* <MDBox display="flex" alignItems="center" ml={-1}>
-              <Checkbox /> */}
-              {/* <MDTypography
+            <MDBox display="flex" alignItems="center" ml={-1}>
+              <Checkbox />
+              <MDTypography
                 variant="button"
                 fontWeight="regular"
                 color="text"
                 sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
               >
                 &nbsp;&nbsp;I agree to the&nbsp;
-              </MDTypography> */}
-              {/* <MDTypography
+              </MDTypography>
+              <MDTypography
                 component="a"
                 href="#"
                 variant="button"
@@ -178,11 +178,11 @@ setError("");
                 textGradient
               >
                 Terms and Conditions
-              </MDTypography> */}
+              </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
               <MDButton variant="gradient" color="info" fullWidth type="submit">
-                CREATE ACCOUNT
+                Create account
               </MDButton>
             </MDBox>
             {successMessage && (
@@ -206,11 +206,12 @@ setError("");
                   fontWeight="medium"
                   textGradient
                 >
- LOG IN                </MDTypography>
+                  Sign In
+                </MDTypography>
               </MDTypography>
             </MDBox>
           </MDBox>
-        {/* </MDBox> */}
+        </MDBox>
       </Card>
     </CoverLayout>
     </div>

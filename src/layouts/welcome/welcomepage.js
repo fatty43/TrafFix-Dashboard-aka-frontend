@@ -2,6 +2,8 @@
 import { useNavigate } from "react-router-dom";
 import { Box, Button, Typography } from "@mui/material";
 import trafficBgImage from "assets/images/sinupp.jpg"; // Replace with actual path
+import logo from "assets/images/logo.png"; // Logo image
+
 
 const WelcomePage = () => {
   const navigate = useNavigate();
@@ -24,6 +26,26 @@ const WelcomePage = () => {
 
       }}
     >
+
+
+{/* Logo at Top Left */}
+<Box
+        sx={{
+          position: "absolute",
+          top: 20,
+          left: 20,
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <img src={logo} alt="Logo" style={{ width: "300px", height: "auto" }} />
+      </Box>
+
+
+
+
+
+
       {/* Signup Buttons at Top Right */}
       <Box
         sx={{
@@ -41,8 +63,7 @@ const WelcomePage = () => {
             color: "black !important",
             "&:hover": { backgroundColor: "#1565c0" },
           }}
-          onClick={() => navigate("/sign-up")}
-        >
+          onClick={() => navigate("/sign-up", { state: { role: "driver" } })}        >
           Sign Up as Driver
         </Button>
         <Button
@@ -52,7 +73,8 @@ const WelcomePage = () => {
             color: "black !important",
             "&:hover": { backgroundColor: "#1565c0" },
           }}
-          onClick={() => navigate("/sign-up")}
+          // onClick={() => navigate("/sign-up")}
+          onClick={() => navigate("/dashboardss", { state: { role: "officer" } })}
         >
           Sign Up as Officer
         </Button>

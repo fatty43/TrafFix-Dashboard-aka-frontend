@@ -5,11 +5,11 @@ contract Grievance {
     struct Complaint {
         uint id; 
         address user;
+        string category;    
         string description;
         string officerName;
         string date;  // New field
         string time;  // New field
-        string location;  // New field
         uint timestamp;
         string status; // e.g., "Filed", "Under Review", "Resolved"
     }
@@ -21,20 +21,20 @@ contract Grievance {
     event ComplaintFiled(uint id, address user, string status);
 
     function fileComplaint(
-        string memory description, 
-        string memory officerName, 
-        string memory date, 
-        string memory time, 
-        string memory location
+    string memory  description,
+    string memory officerName,
+    string memory category,
+    string memory  date,
+    string memory time
     ) public {
         complaints[complaintCount] = Complaint(
             complaintCount,
             msg.sender,
             description,
             officerName,
+             category,
             date,
             time,
-            location,
             block.timestamp,
             "Filed"
         );

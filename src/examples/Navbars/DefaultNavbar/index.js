@@ -114,7 +114,7 @@ function DefaultNavbar({ transparent, light, action }) {
             </MDBox>
           ) : (
             <MDBox display={{ xs: "none", lg: "inline-block" }}>
-              <MDButton
+              {/* <MDButton
                 component="a"
                 href={action.route}
                 target="_blank"
@@ -125,7 +125,7 @@ function DefaultNavbar({ transparent, light, action }) {
                 sx={{ mt: -0.3 }}
               >
                 {action.label}
-              </MDButton>
+              </MDButton> */}
             </MDBox>
           ))}
         <MDBox

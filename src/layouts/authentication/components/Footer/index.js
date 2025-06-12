@@ -59,7 +59,7 @@ function Footer({ light }) {
                   fontWeight="regular"
                   color={light ? "white" : "dark"}
                 >
-                  TrafFix
+               
                 </MDTypography>
               </Link>
             </MDBox>
@@ -81,7 +81,7 @@ function Footer({ light }) {
                   fontWeight="regular"
                   color={light ? "white" : "dark"}
                 >
-                  Blog
+                
                 </MDTypography>
               </Link>
             </MDBox>

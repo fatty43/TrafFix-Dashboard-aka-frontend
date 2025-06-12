@@ -1,9 +1,9 @@
 import Web3 from "web3";
-import DocumentRegistry from "../contracts/DocumentRegistry.json";
+import DocumentRegistry from "../abis/DocumentRegistry.json";
 
 import axios from "axios";
 
-const CONTRACT_ADDRESS = "0x6fecf43496e46d4eD5b4de9d46c31D5f57a9b2c2";
+const CONTRACT_ADDRESS = "0x0B48F2b27d3aF12198c16A7D993B5af046b9ad49";
 
 // IPFS Credentials (Replace with actual credentials)
 const IPFS_API_KEY = "2a5fdc47aaf3fa0db3c4"; 

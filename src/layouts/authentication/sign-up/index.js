@@ -73,6 +73,10 @@ const transaction = await contract.methods.registerUser(name, email).send({
 console.log("Transaction successful:", transaction);
 setSuccessMessage("Registration successful!");
 setError("");
+
+
+
+
 } catch (err) {
   console.error("Registration failed:", err.message || err);
   setError("Registration failed. Please check your inputs or MetaMask configuration.");

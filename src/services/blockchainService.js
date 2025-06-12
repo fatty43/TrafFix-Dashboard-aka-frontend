@@ -54,7 +54,7 @@
 import Web3 from "web3";
 import UserRegistry from "../contracts/UserRegistry.json"; // Adjust the path to your contract's JSON file
 
-const CONTRACT_ADDRESS ="0xc76D7d18644058D1a8550AC0932E649B76EF5B96";;
+const CONTRACT_ADDRESS ="0xfe3919fb2EA741334A1f68eAB61b4b60dbd3a593";;
 
 // Initialize Web3
 export const getWeb3 = async () => {

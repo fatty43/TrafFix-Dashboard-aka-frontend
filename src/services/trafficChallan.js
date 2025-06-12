@@ -1,7 +1,7 @@
  import Web3 from 'web3';
 import TrafficChallanABI from '../abis/TrafficChallan.json'; // Make sure the ABI JSON is exported from Truffle
 
-const CONTRACT_ADDRESS = '0xed53043466D33A1F8015A95fa85e273324431FcC'; // Update with actual address from Ganache
+const CONTRACT_ADDRESS = '0x3ebf61d7368F7f4cc6B482b219DC008eA82D1d31'; // Update with actual address from Ganache
 
 export const getWeb3 = async () => {
   if (window.ethereum) {

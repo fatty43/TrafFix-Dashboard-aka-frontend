@@ -1,8 +1,8 @@
  import Web3 from "web3";
 
-import Grievance from "../contracts/Grievance.json";
+import Grievance from "../abis/Grievance.json";
 
-const CONTRACT_ADDRESS = "0xD474dd227c0144C5A7488c55963241528ebd826C";
+const CONTRACT_ADDRESS = "0xAb4A1DBD3333327D2e15c92Bad20Cb3528D02220";
 
 // Export getWeb3
 export const getWeb3 = async () => {
@@ -20,16 +20,16 @@ export const getGrievanceContract = async () => {
     return new web3.eth.Contract(Grievance.abi, CONTRACT_ADDRESS);
 };
 
-export const fileComplaint = async (description, officerName) => {
+export const fileComplaint = async (description, officerName,category, date, time) => {
     const web3 = await getWeb3();
     const contract = await getGrievanceContract();
     const accounts = await web3.eth.getAccounts();
 
     const receipt = await contract.methods
-        .fileComplaint(description, officerName)
-        .send({ from: accounts[0] });
+    .fileComplaint(description, officerName,category, date, time)
+    .send({ from: accounts[0] });
 
-    return receipt;
+return receipt;
 };
 
 export const getUserComplaints = async () => {

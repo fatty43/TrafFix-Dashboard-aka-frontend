@@ -6,7 +6,7 @@ import axios from "axios";
 import { getWeb3, getContract } from "services/docuploadser";
 
 import Card from "@mui/material/Card";
-import { Checkbox, MenuItem, Select, TextField } from "@mui/material";
+import { Checkbox, MenuItem, Select, TextField, Grid } from "@mui/material";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
@@ -149,73 +149,155 @@ formData.append("pinataOptions", options);
         backgroundImage: `url(${bgImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        height: "100vh",
+        minHeight: "85vh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: "10px",
+        padding: "2rem",
       }}
     >
-      <CoverLayout>
-        <Card style={{ width: "400px", padding: "20px" }}>
-          <MDBox variant="gradient" bgColor="info" borderRadius="lg" coloredShadow="success" p={3} textAlign="center">
-            <MDTypography variant="h4" fontWeight="medium" color="white">
-              Upload Your Document
-            </MDTypography>
-          </MDBox>
+      <Card sx={{ 
+        maxWidth: "550px", 
+        width: "100%",
+        margin: "auto",
+        backgroundColor: "rgba(255, 255, 255, 0.95)",
+        boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)"
+      }}>
+        <MDBox 
+          variant="gradient" 
+          bgColor="info"
+          borderRadius="lg" 
+          coloredShadow="info" 
+          mx={2}
+          mt={-3}
+          p={2.5}
+          mb={1}
+          textAlign="center"
+        >
+          <MDTypography variant="h4" fontWeight="medium" color="white">
+            Upload Your Document
+          </MDTypography>
+        </MDBox>
 
-          <MDBox pt={2} pb={2} px={2}>
-            <MDBox component="form" onSubmit={uploadToBlockchain}>
-              <MDBox mb={2} textAlign="center">
-                <MDButton variant="outlined" color="info" onClick={connectWallet}>
-                  {walletAddress ? `Connected: ${walletAddress.slice(0, 6)}...` : "Connect Wallet"}
+        <MDBox pt={4} pb={3} px={3}>
+          <MDBox component="form" onSubmit={uploadToBlockchain}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} textAlign="center">
+                <MDButton 
+                  variant="outlined" 
+                  color="info" 
+                  onClick={connectWallet}
+                  sx={{ minWidth: "200px" }}
+                >
+                  {walletAddress ? `Connected: ${walletAddress.slice(0, 9)}...` : "Connect Wallet"}
                 </MDButton>
-              </MDBox>
+              </Grid>
 
-              <MDBox mb={2}>
-                <MDInput type="text" label="CNIC Number" fullWidth value={cnic} onChange={(e) => setCnic(e.target.value)} required />
-              </MDBox>
+              <Grid item xs={12}>
+                <MDInput 
+                  type="text" 
+                  label="CNIC Number" 
+                  fullWidth 
+                  value={cnic} 
+                  onChange={(e) => setCnic(e.target.value)} 
+                  required 
+                />
+              </Grid>
 
-              <MDBox mb={2}>
-                <Select fullWidth value={documentType} onChange={(e) => setDocumentType(e.target.value)} displayEmpty>
+              <Grid item xs={12}>
+                <Select 
+                  fullWidth 
+                  value={documentType} 
+                  onChange={(e) => setDocumentType(e.target.value)} 
+                  displayEmpty
+                  sx={{ 
+                    height: "45px",
+                    "& .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "rgba(0, 0, 0, 0.23)"
+                    }
+                  }}
+                >
                   <MenuItem value="" disabled>Select Document Type</MenuItem>
                   <MenuItem value="CNIC Copy">CNIC Copy</MenuItem>
                   <MenuItem value="Vehicle Original Copy">Vehicle Original Copy</MenuItem>
                   <MenuItem value="Passport">Passport</MenuItem>
                   <MenuItem value="Driving License">Driving License</MenuItem>
                 </Select>
-              </MDBox>
+              </Grid>
 
-              <MDBox mb={2}>
-                <TextField multiline rows={3} fullWidth placeholder="Enter document description (optional)" value={description} onChange={(e) => setDescription(e.target.value)} />
-              </MDBox>
+              <Grid item xs={12}>
+                <TextField 
+                  multiline 
+                  rows={3} 
+                  fullWidth 
+                  placeholder="Enter document description (optional)" 
+                  value={description} 
+                  onChange={(e) => setDescription(e.target.value)}
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: "rgba(0, 0, 0, 0.23)"
+                      }
+                    }
+                  }}
+                />
+              </Grid>
 
-              <MDBox mb={2}>
-                <MDInput type="file" fullWidth onChange={(e) => setFile(e.target.files[0])} required />
-              </MDBox>
+              <Grid item xs={12}>
+                <MDBox 
+                  sx={{
+                    border: "1px dashed rgba(0, 0, 0, 0.23)",
+                    borderRadius: "8px",
+                    padding: "1rem",
+                    textAlign: "center"
+                  }}
+                >
+                  <input
+                    type="file"
+                    onChange={(e) => setFile(e.target.files[0])}
+                    required
+                    style={{ 
+                      width: "100%",
+                      cursor: "pointer"
+                    }}
+                  />
+                </MDBox>
+              </Grid>
 
-              {/* <MDBox display="flex" alignItems="center">
-                <Checkbox />
-                <MDTypography variant="button" fontWeight="regular" color="text">
-                  &nbsp;&nbsp;I agree to the&nbsp;
-                </MDTypography>
-                <MDTypography component="a" href="#" variant="button" fontWeight="bold" color="info">
-                  Terms and Conditions
-                </MDTypography>
-              </MDBox> */}
-
-              <MDBox mt={4} mb={1}>
-                <MDButton variant="gradient" color="info" fullWidth type="submit" disabled={isUploading}>
+              <Grid item xs={12}>
+                <MDButton 
+                  variant="gradient" 
+                  color="info" 
+                  fullWidth 
+                  type="submit" 
+                  disabled={isUploading}
+                  sx={{ 
+                    py: 1.5,
+                    mt: 1
+                  }}
+                >
                   {isUploading ? "Uploading..." : "UPLOAD"}
                 </MDButton>
-              </MDBox>
+              </Grid>
 
-              {successMessage && <MDTypography color="success">{successMessage}</MDTypography>}
-              {error && <MDTypography color="error">{error}</MDTypography>}
-            </MDBox>
+              {(successMessage || error) && (
+                <Grid item xs={12} textAlign="center">
+                  {successMessage && (
+                    <MDTypography color="success" variant="button" fontWeight="medium">
+                      {successMessage}
+                    </MDTypography>
+                  )}
+                  {error && (
+                    <MDTypography color="error" variant="button" fontWeight="medium">
+                      {error}
+                    </MDTypography>
+                  )}
+                </Grid>
+              )}
+            </Grid>
           </MDBox>
-        </Card>
-      </CoverLayout>
+        </MDBox>
+      </Card>
     </div>
     </DashboardLayout>
   );

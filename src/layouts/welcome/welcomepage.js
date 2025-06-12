@@ -63,7 +63,11 @@ const WelcomePage = () => {
             color: "black !important",
             "&:hover": { backgroundColor: "#1565c0" },
           }}
-          onClick={() => navigate("/sign-up", { state: { role: "driver" } })}        >
+          onClick={() => {
+            localStorage.setItem("user", "user"); // storing role as 'user'
+            navigate("/sign-up");
+          }}
+        >
           Sign Up as Driver
         </Button>
         <Button
@@ -73,8 +77,10 @@ const WelcomePage = () => {
             color: "black !important",
             "&:hover": { backgroundColor: "#1565c0" },
           }}
-          // onClick={() => navigate("/sign-up")}
-          onClick={() => navigate("/dashboardss", { state: { role: "officer" } })}
+          onClick={() => {
+            localStorage.setItem("user", "admin"); // storing role as 'admin'
+            navigate("/sign-up");
+          }}
         >
           Sign Up as Officer
         </Button>

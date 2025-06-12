@@ -9,7 +9,7 @@ import SignUp from "layouts/authentication/sign-up";
 import GrievancePage from "layouts/grievance/grievance";
 import UploadDocument from "layouts/documnts/UploadDocument"; 
 import WelcomePage from "layouts/welcome/welcomepage";
-import DocumentVerification from "layouts/DocVerf/docverf"
+import DocumentVerifier from "layouts/DocVerf/DocumentVerifier"
 import ChallanGeneration from "layouts/challangen/chllangeneration";
 
 
@@ -87,11 +87,11 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Document Verification", // New Route
-    key: "document-verification",
+    name: "Document Verifier", // New Route
+    key: "document-verifier",
     icon: <Icon fontSize="small">check_circle</Icon>,
-    route: "/document-verification",
-    component: <DocumentVerification />, 
+    route: "/document-verifier",
+    component: <DocumentVerifier />, 
   },
   
   {
